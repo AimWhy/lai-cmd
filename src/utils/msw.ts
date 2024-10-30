@@ -41,14 +41,15 @@ export function setupMSWHandler(framework: Framework) {
   }
   const extension = getDevLanguage();
   const filename = `./src/mocks/handlers.${extension}`;
-  const source = `import { rest } from 'msw'
-  
-  export const handlers = [
-    rest.get('/ping', (_, res, ctx) => {
-      return res(ctx.json({ message: 'pong' }))
-    }),
-  ]
-  `;
+  const source = `import { http, HttpResponse } from 'msw'
+
+export const handlers = [
+  http.get('/ping', () => {
+    return HttpResponse.json({
+      message: 'pong',
+    })
+  }),
+]`;
   writeFileSyncIfNotExist(filename, source);
 }
 
@@ -86,7 +87,7 @@ export function setupBrowserFile() {
   const extension = getDevLanguage();
   const filename = `./src/mocks/browser.${extension}`;
 
-  const source = `import { setupWorker } from 'msw'
+  const source = `import { setupWorker } from 'msw/browser'
 import { handlers } from './handlers'
 
 // This configures a Service Worker with the given request handlers.
@@ -120,8 +121,8 @@ export async function setupBrowserEntryFile(path: string) {
 if (import.meta.env.MODE === 'development') {
   worker.start({
     onUnhandledRequest: ({ url }, print) => {
-      if (url.pathname.startsWith('/api')) {
-        print.warning();
+      if (url.startsWith('/api')) {
+        print.warning()
       }
     }
   });
