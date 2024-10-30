@@ -19,7 +19,10 @@ export const createMSWXTool = () => {
     .setInstall(install)
     .setPromptChoice({
       title: Tools.MSWX,
-      disabled: checkMswxIsInstalled(),
+      // disabled: checkMswxIsInstalled(),
+      disabled: true,
+      description:
+        'Temporarily disabled because "mswx" does not support msw@v2',
     })
     .build();
 };
