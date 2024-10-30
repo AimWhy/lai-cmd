@@ -28,14 +28,18 @@ export async function installHusky(framework: Framework) {
   console.log(green('npm set-script prepare "husky install"'));
   await framework.packageManager.addScript('prepare', 'husky install');
 
-  let preCommitCmd = '"echo pre-commit"';
+  let preCommitCmd = 'echo pre-commit';
   if (
     framework.checkToBeInstalled(Tools.LintStaged) ||
     existLintStagedConfigFiles()
   ) {
-    preCommitCmd = '"npx lint-staged"';
+    preCommitCmd = 'npx lint-staged';
   }
-  console.log(green(`husky add .husky/pre-commit ${preCommitCmd}`));
-  await PackageManager.npx(['husky', 'add', '.husky/pre-commit', preCommitCmd]);
+  console.log(green(`add pre-commit script: "${preCommitCmd}"`));
+  await fs.promises.appendFile(
+    '.husky/pre-commit',
+    preCommitCmd + '\n',
+    'utf-8'
+  );
   console.log(green('husky install done'));
 }
