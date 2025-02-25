@@ -6,6 +6,9 @@ English ｜[繁體中文](https://github.com/LaiJunBin/lai-cmd/blob/develop/READ
 
 ---
 
+## 🚨 **Project Maintenance Update** 🚨  
+> Due to the major upgrade of ESLint to version 9.x, as well as the increasing maturity of front-end initialization tools (which no longer require extensive environment setup), we have decided to temporarily discontinue maintenance of this project.
+
 ## Environment Requirements
 * Node.js >= 18.0.0
 
